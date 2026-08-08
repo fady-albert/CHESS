@@ -26,6 +26,36 @@ if(mode === 'dark') {
 }
 
 // make the board
+
+const pieces = {
+    // white
+    wk: "./assets/images/white/king.png",
+    wq: "./assets/images/white/queen.png",
+    wr: "./assets/images/white/rook.png",
+    wb: "./assets/images/white/bishop.png",
+    wn: "./assets/images/white/knight.png",
+    wp: "./assets/images/white/pawn.png",
+
+    // black
+    bk: "./assets/images/black/king.png",
+    bq: "./assets/images/black/queen.png",
+    br: "./assets/images/black/rook.png",
+    bb: "./assets/images/black/bishop.png",
+    bn: "./assets/images/black/knight.png",
+    bp: "./assets/images/black/pawn.png"
+};
+
+const elements = [
+    ['br', 'bn', 'bb', 'bq', 'bk', 'bb', 'bn', 'br'],
+    ['bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp'],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    ['wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp'],
+    ['wr', 'wn', 'wb', 'wq', 'wk', 'wb', 'wn', 'wr']
+];
+
 function boardMake() {
     for(let row = 0; row < 8; row++) {
         for(let col = 0; col < 8; col++) {
@@ -40,6 +70,18 @@ function boardMake() {
 
             square.dataset.row = row;
             square.dataset.col = col;
+
+            const place = elements[row][col];
+
+            if(place) {
+                const images = document.createElement('img');
+
+                images.src = pieces[place];
+
+                images.classList.add('piece');
+
+                square.appendChild(images);
+            }
 
             board.appendChild(square);
         }
