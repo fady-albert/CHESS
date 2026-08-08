@@ -1,3 +1,10 @@
+:root {
+    --white: #eeeed2;
+    --green: #769656;
+    --dark-white: #a9b7c6;
+    --dark-black: #45515f;
+}
+
 *{
     padding: 0;
     margin: 0;
@@ -11,10 +18,11 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--white);
 }
 
 .con{
-    border: 3px solid #000;
+    border: 5px solid var(--green);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -37,9 +45,9 @@ body{
 }
 
 .light{
-    background: #fff;
+    background: var(--white);
 }
 
 .dark{
-    background: #000;
+    background: var(--green);
 }
