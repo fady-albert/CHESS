@@ -6,6 +6,8 @@ const body = document.body;
 
 // js data
 const mode = localStorage.getItem('mode');
+let turn = 'w';
+let selected = null;
 
 // mode
 function modeFun() {
