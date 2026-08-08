@@ -6,17 +6,40 @@
 
 body{
     width: 100%;
+    height: 100vh;
     max-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.board{
-    display: grid;
-    grid-template-columns: repeat(8 auto);
-    width: 500px;
-    height: 500px;
-    background: black
+.con{
+    border: 3px solid #000;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
+.board{
+    display: grid;
+    grid-template-columns: repeat(8,  auto);
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    height: 500px;
+}
+
+.square{
+    width: calc(500px / 8);
+    height: calc(500px / 8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.light{
+    background: #fff;
+}
+
+.dark{
+    background: #000;
+}
