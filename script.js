@@ -1,5 +1,29 @@
 // import data
+const modeBtn = document.getElementById('mode');
+const modeBtnTxt = document.querySelector('.mode span');
 const board = document.getElementById('board');
+const body = document.body;
+
+// js data
+const mode = localStorage.getItem('mode');
+
+// mode
+function modeFun() {
+    body.classList.toggle('dark');
+
+    setTimeout(() => {
+        modeBtnTxt.textContent = modeBtnTxt.textContent === 'light_mode' ? 'dark_mode' : 'light_mode';
+    }, 500);
+}
+
+modeBtn.addEventListener('click', () => {
+    modeFun()
+    localStorage.setItem('mode', body.classList.contains('dark') ? 'dark' : 'light');
+})
+
+if(mode === 'dark') {
+    modeFun()
+}
 
 // make the board
 function boardMake() {
