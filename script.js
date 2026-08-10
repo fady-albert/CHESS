@@ -216,6 +216,7 @@ function getBishopMove(row, col, color) {
     return move;
 }
 
+// show circle in movement place
 function showMove(moves) {
     
     hideMove()
@@ -232,6 +233,7 @@ function showMove(moves) {
     });
 } 
 
+// remove the circle to avoid repitation
 function hideMove() {
     document.querySelectorAll('.place').forEach(place => {
         place.remove();
