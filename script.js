@@ -75,6 +75,10 @@ function boardMake() {
 
             const place = elements[row][col];
 
+            square.addEventListener('click', () => {
+                selectPiece(square)
+            })
+
             if(place) {
                 const images = document.createElement('img');
 
@@ -88,6 +92,150 @@ function boardMake() {
             board.appendChild(square);
         }
     }
+}
+
+// game functions
+
+// to select any piece
+function selectPiece(square) {
+
+    hideMove()
+    
+    const row = Number(square.dataset.row);
+    const col = Number(square.dataset.col);
+
+    const piece = elements[row][col];
+
+    if(!piece) return;
+
+    selected = {
+        row: row,
+        col: col,
+        piece: piece
+    }
+
+    const move = getMove(row, col)
+
+    showMove(move)
+
+    console.log(move);
+    
+}
+
+// to choose the way of movement
+function getMove(row, col) {
+    const piece = elements[row][col];
+
+    if(!piece) return;
+
+    const color = piece[0];
+    const type = piece[1];
+
+    if(type === 'p') {
+        return getPawnMove(row, col, color);
+    }
+    else if(type === 'b') {
+        return getBishopMove(row, col, color);
+    }
+
+    return [];
+}
+
+// pawn movement
+function getPawnMove(row, col, color) {
+    const move = [];
+
+    const direction = color === 'w' ? -1 : 1;
+
+    const newRow = row + direction;
+
+    if(newRow >= 0 && newRow < 8 && elements[newRow][col] === null) {
+        move.push([newRow, col]);
+    }
+
+    const doubleRow = row + direction * 2;
+
+    const startRow = color === 'w' ? 6 : 1;
+
+    if(row === startRow && elements[newRow][col] === null && elements[doubleRow][col] === null) {
+        move.push([doubleRow, col]);
+    }
+
+    for(let offset of [-1, 1]) {
+        const newCol = col + offset;
+
+        if(newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+            const target = elements[newRow][newCol];
+
+            if(target !== null && target[0] !== color) {
+                move.push([newRow, newCol]);
+            }
+        }
+    }
+
+    return move;
+}
+
+// bishop movement
+function getBishopMove(row, col, color) {
+    const move = [];
+
+    const direction = [
+        [-1, -1],
+        [-1, 1],
+        [1, -1],
+        [1, 1]
+    ];
+
+    for(let [dr, dc] of direction) {
+
+        let newRow = row + dr;
+        let newCol = col + dc;
+
+        while(newRow >= 0 &&
+              newRow < 8 &&
+              newCol >= 0 &&
+              newCol < 8) {
+            const target = elements[newRow][newCol];
+
+            if(!target) {
+                move.push([newRow, newCol])
+            } else {
+                if(target[0] !== color) {
+                    move.push([newRow, newCol])
+                }
+
+                break;
+            }
+
+            newRow += dr;
+            newCol += dc;
+        }
+    }
+
+    return move;
+}
+
+function showMove(moves) {
+    
+    hideMove()
+
+    moves.forEach(([row, col]) => {
+        const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+        
+        if(!square) return;
+
+        const place = document.createElement('div');
+        place.classList.add('place');
+
+        square.appendChild(place);
+    });
+} 
+
+function hideMove() {
+    document.querySelectorAll('.place').forEach(place => {
+        place.remove();
+    })
 }
 
 boardMake()

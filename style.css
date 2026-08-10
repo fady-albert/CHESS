@@ -78,6 +78,7 @@ body.dark .con{
     justify-content: center;
     transition: all 1s ease;
     cursor: pointer;
+    position: relative;
 }
 
 .square img{
@@ -107,4 +108,13 @@ body.dark .square.light{
 
 body.dark .square.dark{
     background: var(--dark-black);
+}
+
+/* game section */
+.place{
+    width: 50%;
+    height: 50%;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.2);
+    position: absolute;
 }
