@@ -140,6 +140,9 @@ function getMove(row, col) {
     else if(type === 'r') {
         return getRookMove(row, col, color);
     }
+    else if(type === 'n') {
+        return getKnightMove(row, col, color);
+    }
 
     return [];
 }
@@ -266,12 +269,12 @@ function getKnightMove(row, col, color) {
     const direction = [
         [-2, -1],
         [-2, 1],
-        [2, -1],
-        [2, 1],
         [-1, -2], 
         [-1, 2],
         [1, -2],
-        [1, 2]
+        [1, 2],
+        [2, -1],
+        [2, 1],
     ]
 
     for(let [dr, dc] of direction) {
