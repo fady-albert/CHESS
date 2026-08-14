@@ -122,6 +122,8 @@ function selectPiece(square) {
 
     if(!piece) return;
 
+    if(piece[0] !==  turn) return;
+
     selected = {
         row: row,
         col: col,
@@ -436,6 +438,7 @@ function movePiece(row, col) {
     selected = null;
     selectedMoves = [];
     hideMove()
+    turn = turn === 'w' ?  'b'  : 'w';
 
     board.innerHTML = '';
     boardMake();
