@@ -279,8 +279,8 @@ function getKnightMove(row, col, color) {
 
     for(let [dr, dc] of direction) {
 
-        const newRow = row += dr;
-        const newCol = col += dc;
+        const newRow = row + dr;
+        const newCol = col + dc;
 
         if(newRow >= 0 &&
            newRow < 8 &&
