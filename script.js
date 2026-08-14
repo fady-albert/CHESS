@@ -8,6 +8,7 @@ const body = document.body;
 const mode = localStorage.getItem('mode');
 let turn = 'w';
 let selected = null;
+let selectedMoves = [];
 
 // mode
 function modeFun() {
@@ -76,6 +77,19 @@ function boardMake() {
             const place = elements[row][col];
 
             square.addEventListener('click', () => {
+
+                const row = Number(square.dataset.row);
+                const col = Number(square.dataset.col);
+
+                if(selected) {
+                    const canMove = selectedMoves.some(([moveRow, moveCol]) => moveRow === row && moveCol === col);
+
+                    if(canMove) {
+                        movePiece(row, col);
+                        return;
+                    }
+                }
+
                 selectPiece(square)
             })
 
@@ -114,11 +128,11 @@ function selectPiece(square) {
         piece: piece
     }
 
-    const move = getMove(row, col)
+    selectedMoves = getMove(row, col)
 
-    showMove(move)
+    showMove(selectedMoves)
 
-    console.log(move);
+    console.log(selectedMoves);
     
 }
 
@@ -377,7 +391,7 @@ function getKingMove(row, col, color) {
             const target = elements[newRow][newCol];
 
             if(!target || target[0] !== color) {
-                momve.push([newRow, newCol])
+                move.push([newRow, newCol])
             }
         }
     }
@@ -407,6 +421,24 @@ function hideMove() {
     document.querySelectorAll('.place').forEach(place => {
         place.remove();
     })
+}
+
+// move
+function movePiece(row, col) {
+    const oldRow = selected.row;
+    const oldCol = selected.col;
+
+    const piece = elements[oldRow][oldCol];
+
+    elements[row][col] = piece;
+    elements[oldRow][oldCol] = null;
+
+    selected = null;
+    selectedMoves = [];
+    hideMove()
+
+    board.innerHTML = '';
+    boardMake();
 }
 
 boardMake()
