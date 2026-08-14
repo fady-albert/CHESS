@@ -259,6 +259,41 @@ function getRookMove(row, col, color) {
     return move;
 }
 
+// knight movement
+function getKnightMove(row, col, color) {
+    const move = [];
+
+    const direction = [
+        [-2, -1],
+        [-2, 1],
+        [2, -1],
+        [2, 1],
+        [-1, -2], 
+        [-1, 2],
+        [1, -2],
+        [1, 2]
+    ]
+
+    for(let [dr, dc] of direction) {
+
+        const newRow = row += dr;
+        const newCol = col += dc;
+
+        if(newRow >= 0 &&
+           newRow < 8 &&
+           newCol >= 0 &&
+           newCol < 8) {
+            const target = elements[newRow][newCol];
+
+            if(!target || target[0] !== color) {
+                move.push([newRow, newCol]);
+            }
+        }
+    }
+
+    return move;
+}
+
 // show circle in movement place
 function showMove(moves) {
     
