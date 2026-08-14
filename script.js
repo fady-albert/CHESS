@@ -146,6 +146,9 @@ function getMove(row, col) {
     else if(type === 'q') {
         return getQueenMove(row, col, color);
     }
+    else if(type === 'k') {
+        return getKingMove(row, col, color);
+    }
 
     return [];
 }
@@ -341,6 +344,41 @@ function getQueenMove(row, col, color) {
 
             newRow += dr;
             newCol += dc;
+        }
+    }
+
+    return move;
+}
+
+// king movement
+function getKingMove(row, col, color) {
+    const move = [];
+
+    const direction = [
+        [-1, -1],
+        [-1, 0],
+        [-1, 1],
+        [0, -1],
+        [0, 1],
+        [1, -1],
+        [1, 0],
+        [1, 1]
+    ]
+
+    for(let[dr, dc] of direction) {
+
+        const newRow = row + dr;
+        const newCol = col + dc;
+
+        if(newRow >= 0 &&
+           newRow < 8 &&
+           newCol >= 0 &&
+           newCol < 8) {
+            const target = elements[newRow][newCol];
+
+            if(!target || target[0] !== color) {
+                momve.push([newRow, newCol])
+            }
         }
     }
 
