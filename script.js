@@ -137,6 +137,9 @@ function getMove(row, col) {
     else if(type === 'b') {
         return getBishopMove(row, col, color);
     }
+    else if(type === 'r') {
+        return getRookMove(row, col, color);
+    }
 
     return [];
 }
@@ -217,7 +220,7 @@ function getBishopMove(row, col, color) {
 }
 
 // rook movement
-function getRookMovement(row, col, color) {
+function getRookMove(row, col, color) {
     const move = [];
 
     const direction = [
