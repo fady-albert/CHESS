@@ -297,6 +297,53 @@ function getKnightMove(row, col, color) {
     return move;
 }
 
+// queen movement
+function getQueenMove(row, col, color) {
+    const move = [];
+
+    const direction = [
+        // bishop movement
+        [-1, -1],
+        [-1, 1],
+        [1, -1],
+        [1, 1],
+
+        // rook movement
+        [-1, 0],
+        [1, 0],
+        [0, 1], 
+        [0, -1]
+    ]
+
+    for(let [dr, dc] of direction) {
+
+        let newRow = row + dr;
+        let newCol = col = dc;
+
+        while(newRow >= 0 &&
+              newRow < 8 &&
+              newCol >= 0 &&
+              newCol < 8) {
+            const target = elements[newRow][newCol];
+
+            if(!target) {
+                move.push([newRow, newCol]);
+            } else {
+                if(target[0] !== color) {
+                    move.push([newRow, newCol]);
+                }
+
+                break;
+            }
+
+            newRow += dr;
+            newCol += dc;
+        }
+    }
+
+    return move;
+}
+
 // show circle in movement place
 function showMove(moves) {
     
