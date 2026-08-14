@@ -143,6 +143,9 @@ function getMove(row, col) {
     else if(type === 'n') {
         return getKnightMove(row, col, color);
     }
+    else if(type === 'q') {
+        return getQueenMove(row, col, color);
+    }
 
     return [];
 }
@@ -318,7 +321,7 @@ function getQueenMove(row, col, color) {
     for(let [dr, dc] of direction) {
 
         let newRow = row + dr;
-        let newCol = col = dc;
+        let newCol = col + dc;
 
         while(newRow >= 0 &&
               newRow < 8 &&
