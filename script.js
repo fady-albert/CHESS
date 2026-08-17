@@ -440,8 +440,51 @@ function movePiece(row, col) {
     hideMove()
     turn = turn === 'w' ?  'b'  : 'w';
 
+    if(isCheck(turn)) {
+        console.log('check');
+    }
+
     board.innerHTML = '';
     boardMake();
+}
+
+// check
+function check(color) {
+    for(let row = 0; row < 8; row++) {
+        for(let col = 0; col < 8; col++) {
+            let piece = elements[row][col]
+
+            if(piece && piece[0] === color && piece[1] === 'k') {
+                return [row, col]
+            }
+        }
+    }
+}
+
+function isCheck(color) {
+    const kingAct = check(color);
+
+    if(!kingAct) return;
+
+    const [kr, kc] = kingAct;
+
+    const enemy = color === 'w' ? 'b' : 'w';
+
+    for(let row = 0; row < 8; row++) {
+        for(let col = 0; col < 8; col++) {
+            const piece = elements[row][col];
+
+            if(!piece || piece[0] !== enemy) continue;
+
+            const moves = getMove(row, col) || [];
+
+            if(moves.some(move => move[0] === kr && move[1] === kc)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 boardMake()
