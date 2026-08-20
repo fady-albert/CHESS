@@ -9,6 +9,7 @@ const mode = localStorage.getItem('mode');
 let turn = 'w';
 let selected = null;
 let selectedMoves = [];
+let mate = false;
 
 // mode
 function modeFun() {
@@ -146,6 +147,8 @@ function getMove(row, col) {
 
     const color = piece[0];
     const type = piece[1];
+
+    if(mate) return;
 
     if(type === 'p') {
         return getPawnMove(row, col, color);
@@ -431,17 +434,6 @@ function showMove(moves) {
             }
         }
     }
-
-    // moves.forEach(([row, col]) => {
-    //     const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-        
-    //     if(!square) return;
-
-    //     const place = document.createElement('div');
-    //     place.classList.add('place');
-
-    //     square.appendChild(place);
-    // });
 } 
 
 // remove the circle to avoid repitation
@@ -481,6 +473,14 @@ function movePiece(row, col) {
     boardMake();
 
     if(isCheck(turn)) {
+        if(!hasMoves(turn)) {
+            console.log('mate');
+            mate = true;
+        } else if(isStalemate(turn)) {
+            console.log('stalemate');
+        } else {
+            console.log('check');
+        }
         showCheck(turn);
     }
 }
@@ -536,6 +536,43 @@ function showCheck(color) {
     if(square) {
         square.classList.add('king-check')
     }
+}
+
+// checkMate
+function hasMoves(color) {
+    for(let row = 0; row < 8; row++) {
+        for(let col = 0; col < 8; col++) {
+            const piece = elements[row][col];
+
+            if(!piece) continue;
+            if(piece[0] !== color) continue;
+
+            const moves = getMove(row, col);
+
+            for(const [newRow, newCol] of moves) {
+                const virtual = elements[newRow][newCol];
+
+                elements[newRow][newCol] = piece;
+                elements[row][col] = null;
+
+                const safe = !isCheck(color);
+
+                elements[row][col] = piece;
+                elements[newRow][newCol] = virtual;
+
+                if(safe) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+// stalemate
+function isStalemate(color) {
+    return !isCheck(color) && !hasMoves(color);
 }
 
 boardMake()
