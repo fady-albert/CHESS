@@ -406,16 +406,42 @@ function showMove(moves) {
     
     hideMove()
 
-    moves.forEach(([row, col]) => {
-        const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+    const piece = elements[selected.row][selected.col];
+    const color = piece[0];
+
+    for(const [row, col] of moves) {
+        const virtual = elements[row][col];
+
+        elements[row][col] = piece;
+        elements[selected.row][selected.col] = null;
+
+        const safe = !isCheck(color);
+
+        elements[selected.row][selected.col] = piece;
+        elements[row][col] = virtual;
+
+        if(safe) {
+            const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+       
+            if(square) {
+                const place = document.createElement('div');
+                place.classList.add('place');
+
+                square.appendChild(place);
+            }
+        }
+    }
+
+    // moves.forEach(([row, col]) => {
+    //     const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
         
-        if(!square) return;
+    //     if(!square) return;
 
-        const place = document.createElement('div');
-        place.classList.add('place');
+    //     const place = document.createElement('div');
+    //     place.classList.add('place');
 
-        square.appendChild(place);
-    });
+    //     square.appendChild(place);
+    // });
 } 
 
 // remove the circle to avoid repitation
