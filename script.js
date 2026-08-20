@@ -439,13 +439,13 @@ function movePiece(row, col) {
     selectedMoves = [];
     hideMove()
     turn = turn === 'w' ?  'b'  : 'w';
-
-    if(isCheck(turn)) {
-        console.log('check');
-    }
-
+    
     board.innerHTML = '';
     boardMake();
+
+    if(isCheck(turn)) {
+        showCheck(turn);
+    }
 }
 
 // check
@@ -464,7 +464,7 @@ function check(color) {
 function isCheck(color) {
     const kingAct = check(color);
 
-    if(!kingAct) return;
+    if(!kingAct) return false;
 
     const [kr, kc] = kingAct;
 
@@ -485,6 +485,20 @@ function isCheck(color) {
     }
 
     return false;
+}
+
+function showCheck(color) {
+    const king = check(color);
+
+    if(!king) return;
+
+    const [row, col] = king;
+
+    const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+
+    if(square) {
+        square.classList.add('king-check')
+    }
 }
 
 boardMake()

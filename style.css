@@ -119,3 +119,7 @@ body.dark .square.dark{
     background: rgba(0, 0, 0, 0.2);
     position: absolute;
 }
+/* check */
+.king-check{
+    box-shadow: inset 0px 0px 10px 10px rgba(220, 70, 70, 0.7);
+}
