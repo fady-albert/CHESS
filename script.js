@@ -432,8 +432,19 @@ function movePiece(row, col) {
 
     const piece = elements[oldRow][oldCol];
 
+    const virtual = elements[row][col];
+
     elements[row][col] = piece;
     elements[oldRow][oldCol] = null;
+
+    const color = piece[0];
+
+    if(isCheck(color)) {
+        elements[oldRow][oldCol] = piece;
+        elements[row][col] = null;
+
+        return;
+    }
 
     selected = null;
     selectedMoves = [];
