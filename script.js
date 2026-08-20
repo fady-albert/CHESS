@@ -10,6 +10,7 @@ let turn = 'w';
 let selected = null;
 let selectedMoves = [];
 let mate = false;
+let promotionSquare = null;
 
 // mode
 function modeFun() {
@@ -468,6 +469,15 @@ function movePiece(row, col) {
     selectedMoves = [];
     hideMove()
     turn = turn === 'w' ?  'b'  : 'w';
+
+    if(piece[1] === 'p' && (row === 0 || row === 7)) {
+        promotionSquare = {
+            row: row,
+            col: col
+        }
+
+        showPromotion(color);
+    }
     
     board.innerHTML = '';
     boardMake();
@@ -573,6 +583,42 @@ function hasMoves(color) {
 // stalemate
 function isStalemate(color) {
     return !isCheck(color) && !hasMoves(color);
+}
+
+// pawn promotion
+function promotion(type, color) {
+    const row = promotionSquare.row;
+    const col = promotionSquare.col;
+
+    elements[row][col] = color + type;
+
+    document.querySelector('.pro').classList.remove('show');
+
+    promotionSquare = null;
+
+    board.innerHTML = ``;
+    boardMake();
+}
+
+function showPromotion(color) {
+    const pro = document.querySelector('.pro');
+    const buttons = document.querySelectorAll('.proCon button');
+
+    buttons.forEach(button => {
+        const type = button.dataset.piece;
+
+        const img = document.createElement('img');
+        img.src = pieces[color + type];
+
+        button.innerHTML = ``;
+        button.appendChild(img);
+
+        button.onclick = () => {
+            promotion(type, color);
+        }
+    })
+
+    pro.classList.add('show');
 }
 
 boardMake()
