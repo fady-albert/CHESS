@@ -12,6 +12,14 @@ let selectedMoves = [];
 let mate = false;
 let promotionSquare = null;
 
+let whiteKingMoved = false;
+let blackKingMoved = false;
+
+let whiteRookLeftMoved = false;
+let whiteRookRightMoved = false;
+let blackRookLeftMoved = false;
+let blackRookRightMoved = false;
+
 // mode
 function modeFun() {
     body.classList.toggle('dark');
@@ -383,21 +391,107 @@ function getKingMove(row, col, color) {
         [1, -1],
         [1, 0],
         [1, 1]
-    ]
+    ];
 
-    for(let[dr, dc] of direction) {
+    for(let [dr, dc] of direction) {
 
         const newRow = row + dr;
         const newCol = col + dc;
 
-        if(newRow >= 0 &&
-           newRow < 8 &&
-           newCol >= 0 &&
-           newCol < 8) {
+        if(
+            newRow >= 0 &&
+            newRow < 8 &&
+            newCol >= 0 &&
+            newCol < 8
+        ) {
             const target = elements[newRow][newCol];
 
             if(!target || target[0] !== color) {
-                move.push([newRow, newCol])
+                move.push([newRow, newCol]);
+            }
+        }
+    }
+
+    // Castling
+    if(!isCheck(color)) {
+
+        // White
+        if(
+            color === 'w' &&
+            row === 7 &&
+            col === 4 &&
+            !whiteKingMoved
+        ) {
+
+            // King side O-O
+            if(
+                !whiteRookRightMoved &&
+                elements[7][5] === null &&
+                elements[7][6] === null &&
+                elements[7][7] === 'wr'
+            ) {
+                if(
+                    !isSquareAttacked(7, 5, 'b') &&
+                    !isSquareAttacked(7, 6, 'b')
+                ) {
+                    move.push([7, 6]);
+                }
+            }
+
+            // Queen side O-O-O
+            if(
+                !whiteRookLeftMoved &&
+                elements[7][1] === null &&
+                elements[7][2] === null &&
+                elements[7][3] === null &&
+                elements[7][0] === 'wr'
+            ) {
+                if(
+                    !isSquareAttacked(7, 3, 'b') &&
+                    !isSquareAttacked(7, 2, 'b')
+                ) {
+                    move.push([7, 2]);
+                }
+            }
+        }
+
+        // Black
+        if(
+            color === 'b' &&
+            row === 0 &&
+            col === 4 &&
+            !blackKingMoved
+        ) {
+
+            // King side O-O
+            if(
+                !blackRookRightMoved &&
+                elements[0][5] === null &&
+                elements[0][6] === null &&
+                elements[0][7] === 'br'
+            ) {
+                if(
+                    !isSquareAttacked(0, 5, 'w') &&
+                    !isSquareAttacked(0, 6, 'w')
+                ) {
+                    move.push([0, 6]);
+                }
+            }
+
+            // Queen side O-O-O
+            if(
+                !blackRookLeftMoved &&
+                elements[0][1] === null &&
+                elements[0][2] === null &&
+                elements[0][3] === null &&
+                elements[0][0] === 'br'
+            ) {
+                if(
+                    !isSquareAttacked(0, 3, 'w') &&
+                    !isSquareAttacked(0, 2, 'w')
+                ) {
+                    move.push([0, 2]);
+                }
             }
         }
     }
@@ -455,6 +549,22 @@ function movePiece(row, col) {
 
     elements[row][col] = piece;
     elements[oldRow][oldCol] = null;
+
+    // Castling
+    if(piece[1] === 'k' && Math.abs(col - oldCol) === 2) {
+
+        // King side
+        if(col === 6) {
+            elements[row][5] = elements[row][7];
+            elements[row][7] = null;
+        }
+
+        // Queen side
+        if(col === 2) {
+            elements[row][3] = elements[row][0];
+            elements[row][0] = null;
+        }
+    }
 
     const color = piece[0];
 
@@ -520,17 +630,156 @@ function isCheck(color) {
 
     const enemy = color === 'w' ? 'b' : 'w';
 
-    for(let row = 0; row < 8; row++) {
-        for(let col = 0; col < 8; col++) {
-            const piece = elements[row][col];
+    return isSquareAttacked(kr, kc, enemy);
+}
 
-            if(!piece || piece[0] !== enemy) continue;
+function isSquareAttacked(row, col, byColor) {
 
-            const moves = getMove(row, col) || [];
+    // Pawn
+    const pawnRow = byColor === 'w' ? row + 1 : row - 1;
 
-            if(moves.some(move => move[0] === kr && move[1] === kc)) {
+    for(const dc of [-1, 1]) {
+
+        const pawnCol = col + dc;
+
+        if(
+            pawnRow >= 0 &&
+            pawnRow < 8 &&
+            pawnCol >= 0 &&
+            pawnCol < 8
+        ) {
+            if(elements[pawnRow][pawnCol] === byColor + 'p') {
                 return true;
             }
+        }
+    }
+
+    // Knight
+    const knightDirections = [
+        [-2, -1],
+        [-2, 1],
+        [-1, -2],
+        [-1, 2],
+        [1, -2],
+        [1, 2],
+        [2, -1],
+        [2, 1]
+    ];
+
+    for(const [dr, dc] of knightDirections) {
+
+        const r = row + dr;
+        const c = col + dc;
+
+        if(
+            r >= 0 &&
+            r < 8 &&
+            c >= 0 &&
+            c < 8
+        ) {
+            if(elements[r][c] === byColor + 'n') {
+                return true;
+            }
+        }
+    }
+
+    // King
+    for(let dr = -1; dr <= 1; dr++) {
+        for(let dc = -1; dc <= 1; dc++) {
+
+            if(dr === 0 && dc === 0) continue;
+
+            const r = row + dr;
+            const c = col + dc;
+
+            if(
+                r >= 0 &&
+                r < 8 &&
+                c >= 0 &&
+                c < 8
+            ) {
+                if(elements[r][c] === byColor + 'k') {
+                    return true;
+                }
+            }
+        }
+    }
+
+    // Rook / Queen
+    const straight = [
+        [-1, 0],
+        [1, 0],
+        [0, -1],
+        [0, 1]
+    ];
+
+    for(const [dr, dc] of straight) {
+
+        let r = row + dr;
+        let c = col + dc;
+
+        while(
+            r >= 0 &&
+            r < 8 &&
+            c >= 0 &&
+            c < 8
+        ) {
+
+            const piece = elements[r][c];
+
+            if(piece) {
+
+                if(
+                    piece[0] === byColor &&
+                    (piece[1] === 'r' || piece[1] === 'q')
+                ) {
+                    return true;
+                }
+
+                break;
+            }
+
+            r += dr;
+            c += dc;
+        }
+    }
+
+    // Bishop / Queen
+    const diagonal = [
+        [-1, -1],
+        [-1, 1],
+        [1, -1],
+        [1, 1]
+    ];
+
+    for(const [dr, dc] of diagonal) {
+
+        let r = row + dr;
+        let c = col + dc;
+
+        while(
+            r >= 0 &&
+            r < 8 &&
+            c >= 0 &&
+            c < 8
+        ) {
+
+            const piece = elements[r][c];
+
+            if(piece) {
+
+                if(
+                    piece[0] === byColor &&
+                    (piece[1] === 'b' || piece[1] === 'q')
+                ) {
+                    return true;
+                }
+
+                break;
+            }
+
+            r += dr;
+            c += dc;
         }
     }
 
