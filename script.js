@@ -849,6 +849,12 @@ function hasMoves(color) {
             const moves = getMove(row, col);
 
             for(const [newRow, newCol] of moves) {
+
+                // Don't allow capturing the enemy king
+                if(elements[newRow][newCol]?.[1] === 'k') {
+                    continue;
+                }
+
                 const virtual = elements[newRow][newCol];
 
                 elements[newRow][newCol] = piece;
