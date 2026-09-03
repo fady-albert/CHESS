@@ -185,3 +185,35 @@ body.dark .proCon button img{
 .proCon button:hover img{
     scale: 1.05;
 }
+
+.gameOver {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.gameOver.show {
+    display: flex;
+}
+
+.gameOverBox {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.gameOverBox h2 {
+    margin-bottom: 10px;
+}
+
+.gameOverBox button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
