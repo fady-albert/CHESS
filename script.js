@@ -550,6 +550,16 @@ function movePiece(row, col) {
     elements[row][col] = piece;
     elements[oldRow][oldCol] = null;
 
+    const color = piece[0];
+
+    // Check if the move is legal
+    if(isCheck(color)) {
+        elements[oldRow][oldCol] = piece;
+        elements[row][col] = virtual;
+
+        return;
+    }
+
     // Castling
     if(piece[1] === 'k' && Math.abs(col - oldCol) === 2) {
 
@@ -566,45 +576,72 @@ function movePiece(row, col) {
         }
     }
 
-    const color = piece[0];
-
-    if(isCheck(color)) {
-        elements[oldRow][oldCol] = piece;
-        elements[row][col] = virtual;
-
-        return;
-    }
-
     selected = null;
     selectedMoves = [];
-    hideMove()
-    turn = turn === 'w' ?  'b'  : 'w';
+    hideMove();
+
+    // Update castling flags
+    if(piece === 'wk') {
+        whiteKingMoved = true;
+    }
+
+    if(piece === 'bk') {
+        blackKingMoved = true;
+    }
+
+    if(piece === 'wr' && oldRow === 7 && oldCol === 0) {
+        whiteRookLeftMoved = true;
+    }
+
+    if(piece === 'wr' && oldRow === 7 && oldCol === 7) {
+        whiteRookRightMoved = true;
+    }
+
+    if(piece === 'br' && oldRow === 0 && oldCol === 0) {
+        blackRookLeftMoved = true;
+    }
+
+    if(piece === 'br' && oldRow === 0 && oldCol === 7) {
+        blackRookRightMoved = true;
+    }
+
+    turn = turn === 'w' ? 'b' : 'w';
 
     if(piece[1] === 'p' && (row === 0 || row === 7)) {
         promotionSquare = {
             row: row,
             col: col
-        }
+        };
 
         showPromotion(color);
     }
-    
+
     board.innerHTML = '';
     boardMake();
 
+    // Check / Checkmate
     if(isCheck(turn)) {
         showCheck(turn);
+
         if(!hasMoves(turn)) {
             mate = true;
-            console.log('checkmate');
-        } else {
-            console.log('check');
+
+            const winner = turn === 'w' ? 'Black' : 'White';
+
+            showGameOver(
+                'Checkmate!',
+                `${winner} wins!`
+            );
         }
-    } else {
-        if(isStalemate(turn)) {
-            mate = true;
-            console.log('stalemate');
-        }
+
+    // Stalemate
+    } else if(isStalemate(turn)) {
+        mate = true;
+
+        showGameOver(
+            'Draw!',
+            'Stalemate'
+        );
     }
 }
 
@@ -871,6 +908,18 @@ function showPromotion(color) {
     })
 
     pro.classList.add('show');
+}
+
+function showGameOver(title, text) {
+
+    const gameOver = document.querySelector('.gameOver');
+    const gameOverTitle = document.getElementById('gameOverTitle');
+    const gameOverText = document.getElementById('gameOverText');
+
+    gameOverTitle.textContent = title;
+    gameOverText.textContent = text;
+
+    gameOver.classList.add('show');
 }
 
 boardMake()
