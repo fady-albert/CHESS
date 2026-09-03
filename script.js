@@ -460,7 +460,7 @@ function movePiece(row, col) {
 
     if(isCheck(color)) {
         elements[oldRow][oldCol] = piece;
-        elements[row][col] = null;
+        elements[row][col] = virtual;
 
         return;
     }
@@ -483,15 +483,18 @@ function movePiece(row, col) {
     boardMake();
 
     if(isCheck(turn)) {
+        showCheck(turn);
         if(!hasMoves(turn)) {
-            console.log('mate');
             mate = true;
-        } else if(isStalemate(turn)) {
-            console.log('stalemate');
+            console.log('checkmate');
         } else {
             console.log('check');
         }
-        showCheck(turn);
+    } else {
+        if(isStalemate(turn)) {
+            mate = true;
+            console.log('stalemate');
+        }
     }
 }
 
