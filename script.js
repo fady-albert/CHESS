@@ -4,6 +4,11 @@ const modeBtnTxt = document.querySelector('.mode span');
 const board = document.getElementById('board');
 const body = document.body;
 
+// import sounds
+const moveSound = new Audio('./assets/audio/move.mp3');
+const winSound = new Audio('./assets/audio/victory.mp3');
+const checkSound = new Audio('./assets/audio/check.mp3')
+
 // js data
 const mode = localStorage.getItem('mode');
 let turn = 'w';
@@ -36,6 +41,13 @@ modeBtn.addEventListener('click', () => {
 
 if(mode === 'dark') {
     modeFun()
+}
+
+
+function sound(name) {
+    name.currentTime = 0;
+    name.volume = 0.7;
+    name.play().catch(() => {});
 }
 
 // make the board
@@ -547,9 +559,9 @@ function movePiece(row, col) {
 
     const virtual = elements[row][col];
 
+    sound(moveSound)
     elements[row][col] = piece;
     elements[oldRow][oldCol] = null;
-
     const color = piece[0];
 
     // Check if the move is legal
@@ -833,6 +845,7 @@ function showCheck(color) {
     const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
 
     if(square) {
+        sound(checkSound)
         square.classList.add('king-check')
     }
 }
@@ -925,6 +938,7 @@ function showGameOver(title, text) {
     gameOverTitle.textContent = title;
     gameOverText.textContent = text;
 
+    sound(winSound)
     gameOver.classList.add('show');
 }
 
