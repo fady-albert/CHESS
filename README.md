@@ -95,7 +95,7 @@ Chess-Game/
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/chess-game.git
+git clone https://github.com/fady-albert/CHESS.git
 ```
 
 ### Open the Project
