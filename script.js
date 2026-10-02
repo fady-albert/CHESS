@@ -26,6 +26,8 @@ let blackRookLeftMoved = false;
 let blackRookRightMoved = false;
 
 // mode
+body.classList.toggle('dark');
+
 function modeFun() {
     body.classList.toggle('dark');
 
