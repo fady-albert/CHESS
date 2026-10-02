@@ -1,62 +1,57 @@
 # Chess Game
 
-A fully functional browser-based Chess game built using HTML, CSS, and JavaScript.
+A chess game I built with HTML, CSS, and JavaScript.
 
-This project implements the core rules of chess, including legal movement, castling, pawn promotion, check detection, checkmate detection, stalemate handling, sound effects, and a light/dark mode toggle.
+The goal of the project was to make a playable chess game in the browser without using a chess library. The game handles the board, pieces, turns, legal moves, and the main chess rules using JavaScript.
 
----
+## What it has
 
-## Features
+* 8×8 chess board
+* Two-player local gameplay
+* Turn management
+* Legal move checking
+* Piece capturing
+* Check detection
+* Checkmate detection
+* Stalemate detection
+* Kingside castling
+* Queenside castling
+* Pawn promotion
+* Move indicators
+* Check highlighting
+* Game-over screen
+* Light/dark theme
+* Theme saved with Local Storage
+* Sound effects
 
-### Gameplay
-- Standard 8×8 chess board
-- Complete starting chess position
-- Turn-based gameplay
-- Legal moves validation
-- Capture mechanics
+## Pieces
 
-### Supported Chess Rules
-- Pawn movement
-- Rook movement
-- Knight movement
-- Bishop movement
-- Queen movement
-- King movement
-- Check detection
-- Checkmate detection
-- Stalemate detection
-- Kingside castling
-- Queenside castling
-- Pawn promotion
+The game supports movement for all six chess pieces:
 
-### User Interface
-- Move indicators
-- Game-over popup
-- Victory screen
-- Check highlighting
-- Responsive board design
+* Pawn
+* Rook
+* Knight
+* Bishop
+* Queen
+* King
 
-### Extras
-- Sound effects for moves
-- Sound effects for check
-- Victory sounds
-- Dark mode
-- Theme persistence using Local Storage
+Moves are checked in JavaScript before they are played, including situations where moving a piece would leave the player's king in check.
 
----
+## Sounds
 
-## Technologies Used
+The game has audio effects for different events, such as:
 
-- HTML5
-- CSS3
-- Vanilla JavaScript
+* Moving a piece
+* Capturing a piece
+* Check
+* Winning the game
 
----
+The sounds are stored in the `assets/audio` folder.
 
-## Project Structure
+## Project structure
 
 ```text
-Chess-Game/
+CHESS/
 │
 ├── index.html
 ├── style.css
@@ -88,112 +83,76 @@ Chess-Game/
 └── README.md
 ```
 
----
+## Running it
 
-## Getting Started
+There is nothing to install.
 
-### Clone the Repository
+Clone the repository:
 
 ```bash
 git clone https://github.com/fady-albert/CHESS.git
 ```
 
-### Open the Project
+Then open `index.html` in a browser.
 
-Open the following file in your browser:
+## How to play
 
-```text
-index.html
-```
+1. Click one of your pieces.
+2. The available moves will be shown.
+3. Click a valid square to move the piece.
+4. Players take turns.
+5. If a pawn reaches the opposite side, choose a promotion piece.
+6. The game ends when there is checkmate or stalemate.
 
-No installation or external dependencies are required.
+## Dark mode
 
----
+The theme can be changed using the theme button.
 
-## How to Play
+The selected theme is saved in Local Storage, so it stays after refreshing the page.
 
-1. Click on a piece belonging to the current player.
-2. Available moves will be highlighted.
-3. Select one of the highlighted squares to move.
-4. Players alternate turns.
-5. Use castling whenever legal.
-6. Promote pawns after reaching the last rank.
-7. Checkmate the opponent to win the game.
+## Rules currently implemented
 
----
+| Rule               | Status      |
+| ------------------ | ----------- |
+| Pawn movement      | Implemented |
+| Rook movement      | Implemented |
+| Knight movement    | Implemented |
+| Bishop movement    | Implemented |
+| Queen movement     | Implemented |
+| King movement      | Implemented |
+| Capturing          | Implemented |
+| Check              | Implemented |
+| Checkmate          | Implemented |
+| Stalemate          | Implemented |
+| Kingside castling  | Implemented |
+| Queenside castling | Implemented |
+| Pawn promotion     | Implemented |
 
-## Dark Mode
+## What I might add later
 
-The game includes a built-in dark mode.
+Some things I may add to the project:
 
-- Click the theme button in the top-right corner.
-- Theme preference is automatically saved.
-- The selected theme remains active after refreshing the page.
+* En passant
+* Move history
+* Undo and redo
+* Chess timer
+* Board rotation
+* Multiplayer
+* AI opponent
+* PGN support
+* FEN support
+* Move notation
 
----
+## Built with
 
-## Audio Effects
+* HTML
+* CSS
+* JavaScript
 
-The game provides sounds for:
+No chess framework or external chess engine is used.
 
-- Piece movement
-- Check notifications
-- Winning the game
+## Author
 
----
+Fady Albert
 
-## Implemented Rules
-
-| Feature | Status |
-|----------|----------|
-| Piece Movement | ✅ |
-| Check Detection | ✅ |
-| Checkmate | ✅ |
-| Stalemate | ✅ |
-| Castling | ✅ |
-| Pawn Promotion | ✅ |
-| Sound Effects | ✅ |
-| Dark Mode | ✅ |
-| Turn Management | ✅ |
-
----
-
-## Future Improvements
-
-Potential features for future releases:
-
-- En Passant support
-- Move history
-- Undo / Redo functionality
-- Chess timer
-- Board rotation
-- Multiplayer mode
-- AI opponent
-- PGN export/import
-- FEN support
-- Move notation display
-
-## Contributing
-
-Contributions are welcome.
-
-1. Fork the project
-2. Create a feature branch
-3. Commit your changes
-4. Push to your branch
-5. Open a Pull Request
-
----
-
-##  License
-
-This project is licensed under the MIT License.
-
----
-
-##  Author
-
-Developed by Fady Albert.
-
-Built with HTML, CSS, and JavaScript.
-``
+Built as a browser-based JavaScript project.
