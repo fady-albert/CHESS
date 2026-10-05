@@ -7,7 +7,15 @@ const body = document.body;
 // import sounds
 const moveSound = new Audio('./assets/audio/move.mp3');
 const winSound = new Audio('./assets/audio/victory.mp3');
-const checkSound = new Audio('./assets/audio/check.mp3')
+const checkSound = new Audio('./assets/audio/check.mp3');
+const horrorSound = new Audio('./assets/audio/horror.mp3');
+
+horrorSound.loop = true;
+horrorSound.volume = 0.5;
+
+document.addEventListener('click', () => {
+    horrorSound.play();
+})
 
 // js data
 const mode = localStorage.getItem('mode');
