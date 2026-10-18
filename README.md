@@ -112,21 +112,19 @@ The selected theme is saved in Local Storage, so it stays after refreshing the p
 
 ## Rules currently implemented
 
-| Rule               | Status      |
-| ------------------ | ----------- |
-| Pawn movement      | Implemented |
-| Rook movement      | Implemented |
-| Knight movement    | Implemented |
-| Bishop movement    | Implemented |
-| Queen movement     | Implemented |
-| King movement      | Implemented |
-| Capturing          | Implemented |
-| Check              | Implemented |
-| Checkmate          | Implemented |
-| Stalemate          | Implemented |
-| Kingside castling  | Implemented |
-| Queenside castling | Implemented |
-| Pawn promotion     | Implemented |
+ Pawn movement
+ Rook movement     
+ Knight movement   
+ Bishop movement   
+ Queen movement    
+ King movement    
+ Capturing         
+ Check            
+ Checkmate        
+ Stalemate       
+ Kingside castling  
+ Queenside castling
+ Pawn promotion   
 
 ## What I might add later
 
