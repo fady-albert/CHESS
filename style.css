@@ -1,8 +1,8 @@
 :root {
-    --white: #f2f2f2;        /* light squares and the light page */
-    --green: #6b6b6b;        /* dark squares, the board frame and the mode button */
-    --dark-white: #b0b0b0;   /* light squares in dark mode */
-    --dark-black: #1c1c1c;   /* the dark page and dark squares in dark mode */
+    --white: #f2f2f2;      
+    --green: #6b6b6b;    
+    --dark-white: #b0b0b0;  
+    --dark-black: #1c1c1c; 
 }
 
 *{
