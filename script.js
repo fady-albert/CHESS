@@ -2,6 +2,7 @@
 const modeBtn = document.getElementById('mode');
 const modeBtnTxt = document.querySelector('.mode span');
 const board = document.getElementById('board');
+const startBtn = document.getElementById('start');
 const body = document.body;
 
 // import sounds
@@ -16,6 +17,11 @@ horrorSound.volume = 0.5;
 document.addEventListener('click', () => {
     horrorSound.play();
 })
+
+function start() {
+    body.classList.toggle('play');
+}
+startBtn.addEventListener('click', start)
 
 // js data
 const mode = 'dark';
