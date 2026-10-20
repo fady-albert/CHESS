@@ -18,7 +18,7 @@ document.addEventListener('click', () => {
 })
 
 // js data
-const mode = localStorage.getItem('mode');
+const mode = 'dark';
 let turn = 'w';
 let selected = null;
 let selectedMoves = [];
