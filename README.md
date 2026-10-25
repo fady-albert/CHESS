@@ -48,41 +48,6 @@ The game has audio effects for different events, such as:
 
 The sounds are stored in the `assets/audio` folder.
 
-## Project structure
-
-```text
-CHESS/
-│
-├── index.html
-├── style.css
-├── script.js
-│
-├── assets/
-│   ├── audio/
-│   │   ├── move.mp3
-│   │   ├── check.mp3
-│   │   └── victory.mp3
-│   │
-│   └── images/
-│       ├── white/
-│       │   ├── king.png
-│       │   ├── queen.png
-│       │   ├── rook.png
-│       │   ├── bishop.png
-│       │   ├── knight.png
-│       │   └── pawn.png
-│       │
-│       └── black/
-│           ├── king.png
-│           ├── queen.png
-│           ├── rook.png
-│           ├── bishop.png
-│           ├── knight.png
-│           └── pawn.png
-│
-└── README.md
-```
-
 ## Running it
 
 There is nothing to install.
